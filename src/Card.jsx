@@ -6,22 +6,34 @@ import { useState } from 'react'
 import TryCard from './TryCard';
 
 function Card() {
-    const [ title, setTitle ] = useState('This is TITLE');
-    const [ caption, setCaption ] = useState('here is caption');
-    const [ timeStart, setTimeStart ] = useState('');
-    const [ timeEnd, setTimeEnd ] = useState('');
+    // const [ title, setTitle ] = useState('This is TITLE');
+    // const [ caption, setCaption ] = useState('here is caption');
+    // const [ timeStart, setTimeStart ] = useState('');
+    // const [ timeEnd, setTimeEnd ] = useState('');
+    // const [ date, setDate ] = useState('');
+    // const [ task, setTask ] = useState('');
+
     const [ hour, setHour ] = useState('');
     const [ min, setMin ] = useState('');
-    const [ date, setDate ] = useState('');
-    const [ task, setTask ] = useState('');
     const [ displayimg, setDisplayimg ] = useState({
         cardio: false, walking: false, swim: false
     });
+
+    const [ inputs, setInputs] = useState ({
+        title: 'type',
+        caption: '',
+        time_start: '',
+        time_end: '',
+        duration: '',
+        date: '',
+        task: '',
+        type: ''
+    })
     
 
 function calcDuration () {
-    let tStart = timeStart;
-    let tEnd = timeEnd;
+    let tStart = inputs.time_start;
+    let tEnd = inputs.time_end;
     console.log(tStart, tEnd);
 
     //convert timeStart and timeEnd to milliseconds
@@ -55,36 +67,47 @@ function calcDuration () {
             let displayMin = mm + ' m'
             console.log(displayHour, displayMin)
 
+            let hour;
+            let min; 
             if (hh === 0) {
-                setHour('');
-                setMin(displayMin);
+                hour = '';
+                min = displayMin;
             } else if (mm === 0) {
-                setHour(displayHour);
-                setMin('');
+                hour = displayHour;
+                min = '';
             } else if (hh > 0 && mm > 0) {
-                setHour(displayHour);
-                setMin(displayMin);
+                hour = displayHour;
+                min = displayMin;
             } else {
-                setHour('0 h');
-                setMin('0 m');
+                hour = '0 h';
+                min = '0 m';
             }
     }
 
-    let changeColor = (data) => {
-        const color = ['#e58e5e', 'green', 'yellow']
-        if (data == 'red') {
+    let changeColor = (e) => {
+        const color = ['red', 'green', 'yellow']
+        const { name, value } = e.target
+        if (value == 'red') {
             console.log('you click red')
-            setTask(color[0])
+            setInputs({...inputs,[name]: color[0]})
+            console.log(inputs)
+            
         }
-        if (data == 'green') {
+        if (value == 'green') {
             console.log('you click green')
-            setTask(color[1])
+            setInputs({...inputs,[name]: value})
         }
-        if (data == 'yellow') {
+        if (value == 'yellow') {
             console.log('you click yellow')
-            setTask(color[2])
+            setInputs({...inputs,[name]: value})
         }
     }
+
+    const handleChangeInput = (e) => {
+        const { name, value } = e.target
+        // console.log({...inputs})
+        setInputs({...inputs,[name]: value})
+        }
 
     return (
         
@@ -95,22 +118,21 @@ function calcDuration () {
             <img src={walking} style={{width:"30px", height:"30px"}}></img>
             <img src={swim} style={{width:"30px", height:"30px"}}></img> */}
             
-            {displayimg.cardio && <img src={cardio} style={{width:"30px", height:"30px"}} />}
+            {inputs.type === 'cardio' && <img src={cardio} style={{width:"30px", height:"30px"}} />}
             {displayimg.walking && <img src={walking} style={{width:"30px", height:"30px"}} />}
             {displayimg.swim && <img src={swim} style={{width:"30px", height:"30px"}} />}
             
             
         </div>
-        <p> {title} </p>
-        <p> {caption} </p>
-        <p>duration : {hour} {min}</p>
-        <p>date : {date}</p>
-        <div style={{backgroundColor:task, height:"50px", width:"50px"}}></div>
+        <p> title {inputs.title}</p>
+        <p> caption </p>
+        <p>duration : hour min</p>
+        <p>date :date {inputs.date}</p>
+        <div style={{backgroundColor:inputs.task, height:"50px", width:"50px"}}></div>
 
-        <TryCard  setTitle={setTitle} setCaption={setCaption} 
-        setTimeStart={setTimeStart} setTimeEnd={setTimeEnd} 
-        calcDuration={calcDuration} setDate={setDate}
-        changeColor={changeColor} setDisplayimg={setDisplayimg} />
+        <TryCard  
+        calcDuration={calcDuration} inputs={inputs} setInputs={setInputs}
+        changeColor={changeColor} setDisplayimg={setDisplayimg} handleChangeInput={handleChangeInput} />
     </div>
     )
 }
