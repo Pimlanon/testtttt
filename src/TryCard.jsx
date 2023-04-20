@@ -1,7 +1,7 @@
 
 
 const TryCard = (props) => {
-    const {inputs, setInputs, calcDuration,  changeColor, setDisplayimg, handleChangeInput } = props
+    const { calcDuration,  changeColor, handleChangeInput } = props
     return (
         <>
             <label>TiTle</label>
@@ -13,14 +13,8 @@ const TryCard = (props) => {
 
             <label>Caption</label>
             <br />
-            <textarea placeholder="caption" onChange={(e) => setCaption(e.target.value)} />
-            {/* <br />
-            <input type="radio" value="1" name="test"></input>
-            <label htmlFor="1">1</label>
-            <input type="radio" value="2" name="test"></input>
-            <label htmlFor="2">2</label>
-            <input type="radio" value="3" name="test"></input>
-            <label htmlFor="3">3</label> */}
+            <textarea placeholder="caption" name="caption" onChange={handleChangeInput} />
+            
             <br />
             <p>Duration</p>
             <label htmlFor="time_start">Time-Start: </label>
@@ -35,11 +29,11 @@ const TryCard = (props) => {
             <br />
 
 
-            <input type="radio" name="task" value='red' onClick={(e)=>changeColor(e)} ></input>
+            <input type="radio" name="task" value="red" onClick={(e)=>changeColor(e)} onChange={handleChangeInput}></input>
             <label htmlFor="red">red</label>
-            <input type="radio" name="task" value='yellow' onClick={()=>changeColor(value)}  ></input>
+            <input type="radio" name="task" value="yellow" onClick={(e)=>changeColor(e)} onChange={handleChangeInput}  ></input>
             <label htmlFor="yellow">yellow</label>
-            <input type="radio" name="task" value='green' onClick={()=>changeColor(value)}  ></input>
+            <input type="radio" name="task" value="green" onClick={(e)=>changeColor(e)} onChange={handleChangeInput}  ></input>
             <label htmlFor="green">green</label>
             <br />
 
@@ -48,7 +42,7 @@ const TryCard = (props) => {
 
             <input type="radio" value="cardio" name="type" onChange={handleChangeInput} ></input>
             <label htmlFor="1">1</label>
-            <input type="radio" value="walk" name="type" onChange={handleChangeInput} ></input>
+            <input type="radio" value="walking" name="type" onChange={handleChangeInput} ></input>
             <label htmlFor="2">2</label>
             <input type="radio" value="swim" name="type" onChange={handleChangeInput} ></input>
             <label htmlFor="3">3</label>
